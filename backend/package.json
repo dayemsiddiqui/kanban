@@ -13,6 +13,7 @@
   "author": "Dayem Siddiqui",
   "license": "MIT",
   "dependencies": {
+    "@google-cloud/firestore": "^2.4.0",
     "express": "^4.17.1",
     "firebase-admin": "^8.6.0"
   }

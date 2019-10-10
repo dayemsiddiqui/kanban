@@ -1,26 +1,32 @@
 const express = require('express');
 const app = express();
-const admin = require('firebase-admin');
+const { Firestore } = require('@google-cloud/firestore');
 
-admin.initializeApp({
-  credential: admin.credential.applicationDefault()
-});
-
-const db = admin.firestore();
+// Create a new client
+const firestore = new Firestore();
 
 app.get('/', (req, res) => {
   let dataItems = [];
-  db.collection('tasks').get()
-  .then((snapshot) => {
-    snapshot.forEach((doc) => {
-      console.log(doc.id, '=>', doc.data());
-      dataItems.push(doc.data())
-    });
-  })
-  .catch((err) => {
-    console.log('Error getting documents', err);
-  });
-  res.status(200).json({status: 'Success', payload: dataItems});
+  let tasks = firestore.collection('tasks');
+
+  tasks
+    .listDocuments()
+    .then(documentRefs => {
+      return firestore.getAll(...documentRefs);
+    })
+    .then(documentSnapshots => {
+      for (let documentSnapshot of documentSnapshots) {
+        if (documentSnapshot.exists) {
+          console.log(`Found document with data: ${documentSnapshot.id}`);
+          dataItems.push(documentSnapshot.data())
+        } else {
+          console.log(`Found missing document: ${documentSnapshot.id}`);
+        }
+      }
+    })
+    .then(() => res.status(200).json({ status: 'Success', payload: dataItems }));
+
+    
 });
 
 // Listen to the App Engine-specified port, or 8080 otherwise
