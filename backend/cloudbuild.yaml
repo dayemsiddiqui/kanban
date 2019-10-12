@@ -1,4 +1,12 @@
 steps:
+  # build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/elated-bebop-154812/kanban-backend', '.']
+  # push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/elated-bebop-154812/kanban-backend']
+  # Deploy container image to Cloud Run
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['app', 'deploy']
-  dir: 'backend'
+  args: ['beta', 'run', 'deploy', 'kanban-backend', '--image', 'gcr.io/elated-bebop-154812/kanban-backend', '--region', 'us-central1','--platform', 'managed', '--quiet']
+images:
+- gcr.io/elated-bebop-154812/kanban-backend
