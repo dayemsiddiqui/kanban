@@ -4,3 +4,7 @@ export interface Task {
     description: string;
     label: string;
 }
+
+export interface GetTaskQueryParams {
+    status?: string;
+}
