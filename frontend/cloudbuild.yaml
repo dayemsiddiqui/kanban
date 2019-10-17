@@ -5,4 +5,6 @@ steps:
   args: ['run', 'build']
 - name: 'gcr.io/elated-bebop-154812/firebase'
     args: [ 'deploy', '--project', 'elated-bebop-154812', '--token', '${_FIREBASE_TOKEN}']
+images:
+- gcr.io/elated-bebop-154812/firebase
 
