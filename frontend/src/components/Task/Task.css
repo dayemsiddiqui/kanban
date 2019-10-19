@@ -1,0 +1,11 @@
+.task-card-item {
+  width: 100% !important;
+}
+.task-card-item:hover {
+  background: #ecf0f1;
+  cursor: pointer;
+}
+
+.task-item {
+  margin: 10px;
+}

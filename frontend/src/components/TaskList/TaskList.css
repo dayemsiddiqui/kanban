@@ -1,0 +1,16 @@
+.task-list {
+  background: #3498db;
+  border-radius: 15px;
+  padding-bottom: 10px !important;
+}
+
+.task-list-header {
+  background: #2ecc71;
+  min-height: 25px;
+  color: white;
+  font-size: 25px;
+  text-align: center;
+  padding: 15px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
