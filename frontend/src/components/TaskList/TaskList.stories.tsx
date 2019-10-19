@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 
 import TaskList from './TaskList';
 import { task, actions } from '../Task/Task.stories';
-import { Task } from '../../interfaces/Task.interface';
+import { Task, TaskStatus } from '../../interfaces/Task.interface';
 
 export const defaultTasks: Task[] = [
   { ...task, id: '1', label: 'Task 1' },
@@ -19,16 +19,20 @@ export const withPinnedTasks: Task[] = [
   {
     id: '6',
     label: 'Task 6 (pinned)',
-    status: 'TASK_PINNED',
+    status: TaskStatus.WAITING,
     description: 'Test description'
   }
 ];
 
 storiesOf('TaskList', module)
   .addDecorator(story => <div style={{ padding: '3rem' }}>{story()}</div>)
-  .add('default', () => <TaskList tasks={defaultTasks} {...actions} />)
-  .add('withPinnedTasks', () => (
-    <TaskList tasks={withPinnedTasks} {...actions} />
+  .add('default', () => (
+    <TaskList title="Waiting" tasks={defaultTasks} {...actions} />
   ))
-  .add('loading', () => <TaskList loading tasks={[]} {...actions} />)
-  .add('empty', () => <TaskList tasks={[]} {...actions} />);
+  .add('withPinnedTasks', () => (
+    <TaskList title="In Progress" tasks={withPinnedTasks} {...actions} />
+  ))
+  .add('loading', () => (
+    <TaskList title="In Review" loading tasks={[]} {...actions} />
+  ))
+  .add('empty', () => <TaskList title="Done" tasks={[]} {...actions} />);

@@ -7,6 +7,7 @@ import './TaskList.css';
 interface TaskListProps {
   loading?: boolean;
   tasks: TaskItem[];
+  title: string;
   onPinTask: () => void;
   onArchiveTask: () => void;
 }
@@ -14,6 +15,7 @@ interface TaskListProps {
 const TaskList: React.FC<TaskListProps> = ({
   loading,
   tasks,
+  title,
   onPinTask,
   onArchiveTask
 }) => {
@@ -27,18 +29,25 @@ const TaskList: React.FC<TaskListProps> = ({
   }
 
   if (tasks.length === 0) {
-    return <div className="list-items">empty</div>;
+    return (
+      <div className="list-items">
+        empty
+        <hr className="uk-divider-vertical"></hr>
+      </div>
+    );
   }
 
   return (
-    <List verticalAlign="middle" className="task-list">
-      <List.Header>
-        <div className="task-list-header">Not Started</div>
-      </List.Header>
-      {tasks.map(task => (
-        <Task key={task.id} task={task} {...events} />
-      ))}
-    </List>
+    <>
+      <h3>{title}</h3>
+      <ul className="uk-list task-list">
+        {tasks.map(task => (
+          <li>
+            <Task key={task.id} task={task} {...events} />
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
 

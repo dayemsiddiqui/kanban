@@ -1,0 +1,11 @@
+.navbar {
+  background: #2f3640 !important;
+}
+
+.navbar-logo {
+  color: white !important;
+}
+
+.color-white > li > a {
+  color: white !important;
+}

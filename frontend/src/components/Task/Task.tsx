@@ -1,5 +1,4 @@
 import React from 'react';
-import { List, Card } from 'semantic-ui-react';
 import './Task.css';
 import { Task as TaskItem } from '../../interfaces/Task.interface';
 
@@ -15,15 +14,9 @@ const Task: React.FC<TaskProps> = ({
   onPinTask
 }) => {
   return (
-    <List.Item class="task-item">
-      <List.Content>
-        <Card className="task-card-item">
-          <Card.Content>
-            <Card.Header>{label}</Card.Header>
-          </Card.Content>
-        </Card>
-      </List.Content>
-    </List.Item>
+    <div className="uk-card uk-card-default uk-card-hover uk-card-body task-item">
+      <p className="task-label">{label}</p>
+    </div>
   );
 };
 
