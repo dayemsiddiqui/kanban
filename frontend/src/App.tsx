@@ -1,15 +1,9 @@
 import React from 'react';
 import './App.css';
-import Board from './containers/Board/Board';
-import NavBar from './components/NavBar/NavBar';
+import Home from './containers/Home/Home';
 
 const App: React.FC = () => {
-  return (
-    <>
-      <NavBar />
-      <Board />
-    </>
-  );
+  return <Home />;
 };
 
 export default App;

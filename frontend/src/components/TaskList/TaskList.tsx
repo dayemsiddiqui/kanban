@@ -1,7 +1,6 @@
 import React from 'react';
 import { Task as TaskItem } from '../../interfaces/Task.interface';
 import Task from '../Task/Task';
-import { List } from 'semantic-ui-react';
 import './TaskList.css';
 
 interface TaskListProps {
@@ -38,8 +37,8 @@ const TaskList: React.FC<TaskListProps> = ({
   }
 
   return (
-    <>
-      <h3>{title}</h3>
+    <div className="task-list-container">
+      <strong>{title.toUpperCase()}</strong>
       <ul className="uk-list task-list">
         {tasks.map(task => (
           <li>
@@ -47,7 +46,7 @@ const TaskList: React.FC<TaskListProps> = ({
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 

@@ -1,10 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App';
 import '../node_modules/uikit/dist/js/uikit';
 import '../node_modules/uikit/dist/js/uikit-icons';
 import * as serviceWorker from './serviceWorker';
+import { CustomWindow } from './interfaces/CustomWindow.interface';
+const { registerObserver } = require('react-perf-devtool');
+
+declare let window: CustomWindow;
+// assign the observer to the global scope, as the GC will delete it otherwise
+window.observer = registerObserver({});
 const UIkit = require('uikit');
 const Icons = require('uikit/dist/js/uikit-icons');
 UIkit.use(Icons);

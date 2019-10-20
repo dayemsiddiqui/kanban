@@ -6,6 +6,6 @@
   color: white !important;
 }
 
-.color-white > li > a {
+.color-white > li > span {
   color: white !important;
 }

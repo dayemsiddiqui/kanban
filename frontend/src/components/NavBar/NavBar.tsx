@@ -1,23 +1,21 @@
 import React from 'react';
 import './NavBar.css';
 
-const NavBar: React.FC = () => {
+interface NavBarProps {
+  onAddTaskClick: () => void;
+}
+
+const NavBar: React.FC<NavBarProps> = ({ onAddTaskClick }) => {
   return (
-    <nav className="uk-navbar-container navbar" uk-navbar>
+    <nav className="uk-navbar-container navbar">
       <div className="uk-navbar-left">
-        <a className="uk-navbar-item uk-logo navbar-logo" href="#">
+        <span className="uk-navbar-item uk-logo navbar-logo">
           Dead Simple Kanban
-        </a>
+        </span>
 
         <ul className="uk-navbar-nav color-white">
           <li>
-            <a href="#">
-              <span
-                className="uk-icon uk-margin-small-right"
-                uk-icon="icon: star"
-              ></span>
-              Add Task
-            </a>
+            <span onClick={onAddTaskClick}>Add Task</span>
           </li>
         </ul>
       </div>

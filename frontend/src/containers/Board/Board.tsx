@@ -19,7 +19,7 @@ const tasks: Task[] = [
 const Board: React.FC = () => {
   return (
     <>
-      <div className="uk-column-1-4 uk-padding board">
+      <div className="uk-column-1-4 board">
         <TaskList
           title="Waiting"
           tasks={tasks}
