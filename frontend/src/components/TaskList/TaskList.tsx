@@ -24,20 +24,29 @@ const TaskList: React.FC<TaskListProps> = ({
   };
 
   if (loading) {
-    return <div className="list-items">loading</div>;
+    return (
+      <div>
+        <strong>{title.toUpperCase()}</strong>
+        <ul className="uk-list task-list">
+          <p>Loading</p>
+        </ul>
+      </div>
+    );
   }
 
   if (tasks.length === 0) {
     return (
-      <div className="list-items">
-        empty
-        <hr className="uk-divider-vertical"></hr>
+      <div>
+        <strong>{title.toUpperCase()}</strong>
+        <ul className="uk-list task-list">
+          <p>Empty</p>
+        </ul>
       </div>
     );
   }
 
   return (
-    <div className="task-list-container">
+    <div>
       <strong>{title.toUpperCase()}</strong>
       <ul className="uk-list task-list">
         {tasks.map(task => (

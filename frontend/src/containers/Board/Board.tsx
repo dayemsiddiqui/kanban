@@ -1,52 +1,54 @@
 import React from 'react';
 import TaskList from '../../components/TaskList/TaskList';
-import { Task, TaskStatus } from '../../interfaces/Task.interface';
-
 import './Board.css';
-
-const tasks: Task[] = [
-  { id: '1', label: 'Task 1', description: 'test', status: TaskStatus.WAITING },
-  { id: '1', label: 'Task 1', description: 'test', status: TaskStatus.WAITING },
-  { id: '1', label: 'Task 1', description: 'test', status: TaskStatus.WAITING },
-  { id: '1', label: 'Task 1', description: 'test', status: TaskStatus.WAITING },
-  { id: '1', label: 'Task 1', description: 'test', status: TaskStatus.WAITING },
-  { id: '1', label: 'Task 1', description: 'test', status: TaskStatus.WAITING },
-  { id: '1', label: 'Task 1', description: 'test', status: TaskStatus.WAITING },
-  { id: '1', label: 'Task 1', description: 'test', status: TaskStatus.WAITING },
-  { id: '1', label: 'Task 1', description: 'test', status: TaskStatus.WAITING }
-];
+import { observer } from 'mobx-react-lite';
+import { useTaskStore } from '../../hooks/useTaskStore';
+import { Row, Col, Container } from 'reactstrap';
 
 const Board: React.FC = () => {
+  const taskStore = useTaskStore();
+
   return (
-    <>
-      <div className="uk-column-1-4 board">
-        <TaskList
-          title="Waiting"
-          tasks={tasks}
-          onPinTask={() => {}}
-          onArchiveTask={() => {}}
-        ></TaskList>
-        <TaskList
-          title="In Progress"
-          tasks={tasks}
-          onPinTask={() => {}}
-          onArchiveTask={() => {}}
-        ></TaskList>
-        <TaskList
-          title="In Review"
-          tasks={tasks}
-          onPinTask={() => {}}
-          onArchiveTask={() => {}}
-        ></TaskList>
-        <TaskList
-          title="Done"
-          tasks={tasks}
-          onPinTask={() => {}}
-          onArchiveTask={() => {}}
-        ></TaskList>
-      </div>
-    </>
+    <Container fluid>
+      <Row>
+        <Col className="task-list-container" sm="3">
+          <TaskList
+            title="Waiting"
+            tasks={taskStore.waiting}
+            onPinTask={() => {}}
+            onArchiveTask={() => {}}
+          ></TaskList>
+        </Col>
+
+        <Col className="task-list-container" sm="3">
+          <TaskList
+            title="In Progress"
+            tasks={taskStore.inprogress}
+            onPinTask={() => {}}
+            onArchiveTask={() => {}}
+          ></TaskList>
+        </Col>
+
+        <Col className="task-list-container" sm="3">
+          <TaskList
+            title="In Review"
+            tasks={taskStore.inreview}
+            onPinTask={() => {}}
+            onArchiveTask={() => {}}
+          ></TaskList>
+        </Col>
+
+        <Col className="task-list-container" sm="3">
+          <TaskList
+            title="Done"
+            tasks={taskStore.done}
+            onPinTask={() => {}}
+            onArchiveTask={() => {}}
+          ></TaskList>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
-export default Board;
+export default observer(Board);
