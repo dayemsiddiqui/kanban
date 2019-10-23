@@ -11,7 +11,9 @@ const TaskModel = types
       TaskStatus.IN_PROGRESS,
       TaskStatus.IN_REVIEW,
       TaskStatus.WAITING
-    ])
+    ]),
+    pinned: types.boolean,
+    archieved: types.boolean
   })
   .actions(self => ({
     changeStatus(status: TaskStatus) {

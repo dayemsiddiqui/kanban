@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TaskList from '../../components/TaskList/TaskList';
 import './Board.css';
 import { observer } from 'mobx-react-lite';
@@ -7,6 +7,10 @@ import { Row, Col, Container } from 'reactstrap';
 
 const Board: React.FC = () => {
   const taskStore = useTaskStore();
+
+  useEffect(() => {
+    taskStore.fetchTasks();
+  }, [taskStore]);
 
   return (
     <Container fluid>

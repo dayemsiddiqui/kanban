@@ -3,6 +3,8 @@ export interface Task {
   label: string;
   description: string;
   status: TaskStatus;
+  archieved: boolean;
+  pinned: boolean;
 }
 
 export enum TaskStatus {

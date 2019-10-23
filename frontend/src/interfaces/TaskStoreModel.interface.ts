@@ -6,4 +6,5 @@ export interface TaskStoreModel {
   inreview: Task[];
   done: Task[];
   addTask: (task: Task) => void;
+  fetchTasks: () => void;
 }

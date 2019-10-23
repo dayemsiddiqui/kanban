@@ -1,6 +1,7 @@
 import { types } from 'mobx-state-tree';
 import { TaskStatus, Task } from '../interfaces/Task.interface';
 import TaskModel from './Task.model';
+import apiInstance from '../libs/api-service';
 
 const TaskStoreModel = types
   .model('TaskStore', {
@@ -28,6 +29,10 @@ const TaskStoreModel = types
           self.waiting.push(task);
           break;
       }
+    },
+    async fetchTasks() {
+      const tasks = await apiInstance.get('tasks');
+      console.log('Tasks', tasks);
     }
   }));
 
