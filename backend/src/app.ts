@@ -2,9 +2,13 @@ import express from 'express';
 import taskRouter from './api/tasks';
 import statusRouter from './api/status';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 // Create a new express application instance
 const app: express.Application = express();
+
+//Allow CORS
+app.use(cors());
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));

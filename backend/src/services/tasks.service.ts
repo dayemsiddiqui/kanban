@@ -3,17 +3,26 @@ import { taskCollection, firestoreClient } from '../lib/firestore.lib';
 
 export async function getAllTasks(): Promise<Task[]> {
     const dataItems: Task[] = [];
-    const documentRefs = await taskCollection.listDocuments();
-    const documentSnapshots = await firestoreClient.getAll(...documentRefs);
-    for (const documentSnapshot of documentSnapshots) {
-        if (documentSnapshot.exists) {
-            console.log(`Found document with data: ${documentSnapshot.id}`);
-            dataItems.push({ id: documentSnapshot.id, ...documentSnapshot.data() } as Task);
-        } else {
-            console.log(`Found missing document: ${documentSnapshot.id}`);
+    try {
+        const documentRefs = await taskCollection.listDocuments();
+        if (documentRefs.length === 0) {
+            console.info('No Documents Found');
+            return [];
         }
+        const documentSnapshots = await firestoreClient.getAll(...documentRefs);
+        for (const documentSnapshot of documentSnapshots) {
+            if (documentSnapshot.exists) {
+                console.log(`Found document with data: ${documentSnapshot.id}`);
+                dataItems.push({ id: documentSnapshot.id, ...documentSnapshot.data() } as Task);
+            } else {
+                console.log(`Found missing document: ${documentSnapshot.id}`);
+            }
+        }
+        return dataItems;
+    } catch (err) {
+        console.error('Failed to fetch tasks', err);
+        return [];
     }
-    return dataItems;
 }
 
 export async function getTaskByStatus(statusValue: string): Promise<Task[]> {
