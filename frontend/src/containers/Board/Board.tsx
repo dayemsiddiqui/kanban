@@ -1,33 +1,28 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import TaskList from '../../components/TaskList/TaskList';
 import './Board.css';
-import { observer } from 'mobx-react-lite';
-import { useTaskStore } from '../../hooks/useTaskStore';
 import { Row, Col, Container } from 'reactstrap';
+import useFetchTasks from '../../hooks/useFetchTasks';
+import useObserveTaskStore from '../../hooks/useObserveTaskStore';
 
 const Board: React.FC = () => {
-  const taskStore = useTaskStore();
-
-  useEffect(() => {
-    taskStore.fetchTasks();
-  }, [taskStore]);
-
+  useFetchTasks();
+  const { snapshot } = useObserveTaskStore();
   return (
     <Container fluid>
       <Row>
         <Col className="task-list-container" sm="3">
           <TaskList
             title="Waiting"
-            tasks={taskStore.waiting}
+            tasks={snapshot.waiting}
             onPinTask={() => {}}
             onArchiveTask={() => {}}
           ></TaskList>
         </Col>
-
         <Col className="task-list-container" sm="3">
           <TaskList
             title="In Progress"
-            tasks={taskStore.inprogress}
+            tasks={snapshot.inprogress}
             onPinTask={() => {}}
             onArchiveTask={() => {}}
           ></TaskList>
@@ -36,7 +31,7 @@ const Board: React.FC = () => {
         <Col className="task-list-container" sm="3">
           <TaskList
             title="In Review"
-            tasks={taskStore.inreview}
+            tasks={snapshot.inreview}
             onPinTask={() => {}}
             onArchiveTask={() => {}}
           ></TaskList>
@@ -45,7 +40,7 @@ const Board: React.FC = () => {
         <Col className="task-list-container" sm="3">
           <TaskList
             title="Done"
-            tasks={taskStore.done}
+            tasks={snapshot.done}
             onPinTask={() => {}}
             onArchiveTask={() => {}}
           ></TaskList>
@@ -55,4 +50,4 @@ const Board: React.FC = () => {
   );
 };
 
-export default observer(Board);
+export default Board;

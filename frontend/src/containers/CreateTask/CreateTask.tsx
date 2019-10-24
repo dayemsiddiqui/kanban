@@ -3,6 +3,8 @@ import ModalComponent from '../../components/ModalComponent/ModalComponent';
 import { ModalBody, ModalFooter, Button } from 'reactstrap';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { TaskStatus } from '../../interfaces/Task.interface';
+import useCreateTask from '../../hooks/useCreateTask';
+import { useTaskStore } from '../../hooks/useTaskStore';
 
 interface CreateTaskProps {
   modal: boolean;
@@ -10,14 +12,20 @@ interface CreateTaskProps {
 }
 
 const CreateTask: React.FC<CreateTaskProps> = ({ modal, closeModal }) => {
+  const { submitting, createTask } = useCreateTask();
   return (
     <ModalComponent modal={modal} title="Create Task">
       <ModalBody>
         <Formik
-          initialValues={{ email: '', password: '' }}
+          initialValues={{
+            label: '',
+            description: '',
+            status: TaskStatus.WAITING
+          }}
           validate={values => ({})}
           onSubmit={(values, { setSubmitting }) => {
-            setSubmitting(false);
+            setSubmitting(submitting);
+            createTask(values);
           }}
         >
           {({ isSubmitting }) => (

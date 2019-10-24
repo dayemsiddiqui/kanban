@@ -50,7 +50,7 @@ const TaskList: React.FC<TaskListProps> = ({
       <strong>{title.toUpperCase()}</strong>
       <ul className="uk-list task-list">
         {tasks.map(task => (
-          <li>
+          <li key={task.id}>
             <Task key={task.id} task={task} {...events} />
           </li>
         ))}

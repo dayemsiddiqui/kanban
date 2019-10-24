@@ -1,79 +1,8 @@
 import TaskStoreModel from './TaskStore.model';
-import { TaskStatus, Task } from '../interfaces/Task.interface';
+import { onSnapshot } from 'mobx-state-tree';
 
-const tasks: Task[] = [
-  {
-    id: '1',
-    label: 'Task 1',
-    description: 'test',
-    status: TaskStatus.WAITING,
-    pinned: false,
-    archieved: false
-  },
-  {
-    id: '1',
-    label: 'Task 1',
-    description: 'test',
-    status: TaskStatus.WAITING,
-    pinned: false,
-    archieved: false
-  },
-  {
-    id: '1',
-    label: 'Task 1',
-    description: 'test',
-    status: TaskStatus.WAITING,
-    pinned: false,
-    archieved: false
-  },
-  {
-    id: '1',
-    label: 'Task 1',
-    description: 'test',
-    status: TaskStatus.WAITING,
-    pinned: false,
-    archieved: false
-  },
-  {
-    id: '1',
-    label: 'Task 1',
-    description: 'test',
-    status: TaskStatus.WAITING,
-    pinned: false,
-    archieved: false
-  },
-  {
-    id: '1',
-    label: 'Task 1',
-    description: 'test',
-    status: TaskStatus.WAITING,
-    pinned: false,
-    archieved: false
-  },
-  {
-    id: '1',
-    label: 'Task 1',
-    description: 'test',
-    status: TaskStatus.WAITING,
-    pinned: false,
-    archieved: false
-  },
-  {
-    id: '1',
-    label: 'Task 1',
-    description: 'test',
-    status: TaskStatus.WAITING,
-    pinned: false,
-    archieved: false
-  },
-  {
-    id: '1',
-    label: 'Task 1',
-    description: 'test',
-    status: TaskStatus.WAITING,
-    pinned: false,
-    archieved: false
-  }
-];
+export const taskStore = TaskStoreModel.create({});
 
-export const taskStore = TaskStoreModel.create({ waiting: tasks });
+onSnapshot(taskStore, snapshot => {
+  console.dir(snapshot);
+});

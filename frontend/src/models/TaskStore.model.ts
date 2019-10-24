@@ -1,7 +1,8 @@
 import { types } from 'mobx-state-tree';
 import { TaskStatus, Task } from '../interfaces/Task.interface';
 import TaskModel from './Task.model';
-import apiInstance from '../libs/api-service';
+import { cast } from 'mobx-state-tree';
+import { sanitizeTask } from '../libs/sanitize-response';
 
 const TaskStoreModel = types
   .model('TaskStore', {
@@ -29,10 +30,32 @@ const TaskStoreModel = types
           self.waiting.push(task);
           break;
       }
+    }
+  }))
+  .actions(self => ({
+    setWaitingTasks(tasks: Task[]) {
+      const waiting = tasks
+        .filter(task => task.status === TaskStatus.WAITING)
+        .map(task => sanitizeTask(task));
+      self.waiting = cast(waiting);
     },
-    async fetchTasks() {
-      const tasks = await apiInstance.get('tasks');
-      console.log('Tasks', tasks);
+    setInProgressTasks(tasks: Task[]) {
+      const inprogress = tasks
+        .filter(task => task.status === TaskStatus.IN_PROGRESS)
+        .map(task => sanitizeTask(task));
+      self.inprogress = cast(inprogress);
+    },
+    setInReviewTasks(tasks: Task[]) {
+      const inreview = tasks
+        .filter(task => task.status === TaskStatus.IN_REVIEW)
+        .map(task => sanitizeTask(task));
+      self.inreview = cast(inreview);
+    },
+    setDoneTasks(tasks: Task[]) {
+      const done = tasks
+        .filter(task => task.status === TaskStatus.DONE)
+        .map(task => sanitizeTask(task));
+      self.done = cast(done);
     }
   }));
 

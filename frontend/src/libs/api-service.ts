@@ -17,8 +17,7 @@ function errorResponseHandler(error: any) {
 }
 
 const apiInstance = axios.create({
-  baseURL: environment.API_URL,
-  timeout: 1000
+  baseURL: environment.API_URL
 });
 
 apiInstance.interceptors.response.use(
