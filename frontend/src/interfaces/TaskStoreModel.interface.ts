@@ -12,6 +12,7 @@ export interface TaskStoreView {
   getInProgressTaskByIndex: (index: number) => Task;
   getInReviewTaskByIndex: (index: number) => Task;
   getDoneTaskByIndex: (index: number) => Task;
+  getTaskByIndex: (listType: TaskStatus, index: number) => Task;
 }
 
 export interface TaskStoreModel extends TaskStoreSnapshot, TaskStoreView {

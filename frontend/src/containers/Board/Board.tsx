@@ -6,19 +6,16 @@ import useFetchTasks from '../../hooks/useFetchTasks';
 import { useTaskStore } from '../../hooks/useTaskStore';
 import { observer } from 'mobx-react-lite';
 import useDeleteTask from '../../hooks/useDeleteTask';
-import {
-  DragDropContext,
-  DropResult,
-  ResponderProvided
-} from 'react-beautiful-dnd';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { TaskStatus } from '../../interfaces/Task.interface';
+import useMoveTask from '../../hooks/useMoveTask';
 
 const Board: React.FC = () => {
   const taskStore = useTaskStore();
+  const { moveTask } = useMoveTask();
   useFetchTasks();
   const { deleteTask } = useDeleteTask();
-  const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
-    console.log('Result', result);
+  const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
       return;
     }
@@ -26,7 +23,7 @@ const Board: React.FC = () => {
     const fromIndex = result.source.index;
     const toListType = result.destination.droppableId as TaskStatus;
     const toIndex = result.destination.index;
-    taskStore.moveTask(fromListType, toListType, fromIndex, toIndex);
+    moveTask(fromListType, toListType, fromIndex, toIndex);
   };
   return (
     <Container fluid>
