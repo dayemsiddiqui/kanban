@@ -3,6 +3,7 @@ import { Task as TaskItem } from '../../interfaces/Task.interface';
 import Task from '../Task/Task';
 import './TaskList.css';
 import { observer } from 'mobx-react-lite';
+import { Droppable } from 'react-beautiful-dnd';
 
 interface TaskListProps {
   loading?: boolean;
@@ -52,13 +53,22 @@ const TaskList: React.FC<TaskListProps> = ({
   return (
     <div>
       <strong>{title.toUpperCase()}</strong>
-      <ul className="uk-list task-list">
-        {tasks.map(task => (
-          <li key={task.id}>
-            <Task key={task.id} task={task} {...events} />
-          </li>
-        ))}
-      </ul>
+      <Droppable droppableId={title}>
+        {provided => (
+          <ul
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            className="uk-list task-list"
+          >
+            {tasks.map((task, index) => (
+              <li key={task.id}>
+                <Task key={task.id} task={task} index={index} {...events} />
+              </li>
+            ))}
+            {provided.placeholder}
+          </ul>
+        )}
+      </Droppable>
     </div>
   );
 };

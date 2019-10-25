@@ -6,6 +6,7 @@ import useFetchTasks from '../../hooks/useFetchTasks';
 import { useTaskStore } from '../../hooks/useTaskStore';
 import { observer } from 'mobx-react-lite';
 import useDeleteTask from '../../hooks/useDeleteTask';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 const Board: React.FC = () => {
   const taskStore = useTaskStore();
@@ -13,46 +14,48 @@ const Board: React.FC = () => {
   const { deleteTask } = useDeleteTask();
   return (
     <Container fluid>
-      <Row>
-        <Col className="task-list-container" sm="3">
-          <TaskList
-            title="Waiting"
-            tasks={taskStore.waiting}
-            onDeleteTask={deleteTask}
-            onPinTask={() => {}}
-            onArchiveTask={() => {}}
-          ></TaskList>
-        </Col>
-        <Col className="task-list-container" sm="3">
-          <TaskList
-            title="In Progress"
-            tasks={taskStore.inprogress}
-            onDeleteTask={deleteTask}
-            onPinTask={() => {}}
-            onArchiveTask={() => {}}
-          ></TaskList>
-        </Col>
+      <DragDropContext onDragEnd={() => {}}>
+        <Row>
+          <Col className="task-list-container" sm="3">
+            <TaskList
+              title="Waiting"
+              tasks={taskStore.waiting}
+              onDeleteTask={deleteTask}
+              onPinTask={() => {}}
+              onArchiveTask={() => {}}
+            ></TaskList>
+          </Col>
+          <Col className="task-list-container" sm="3">
+            <TaskList
+              title="In Progress"
+              tasks={taskStore.inprogress}
+              onDeleteTask={deleteTask}
+              onPinTask={() => {}}
+              onArchiveTask={() => {}}
+            ></TaskList>
+          </Col>
 
-        <Col className="task-list-container" sm="3">
-          <TaskList
-            title="In Review"
-            tasks={taskStore.inreview}
-            onDeleteTask={deleteTask}
-            onPinTask={() => {}}
-            onArchiveTask={() => {}}
-          ></TaskList>
-        </Col>
+          <Col className="task-list-container" sm="3">
+            <TaskList
+              title="In Review"
+              tasks={taskStore.inreview}
+              onDeleteTask={deleteTask}
+              onPinTask={() => {}}
+              onArchiveTask={() => {}}
+            ></TaskList>
+          </Col>
 
-        <Col className="task-list-container" sm="3">
-          <TaskList
-            title="Done"
-            tasks={taskStore.done}
-            onDeleteTask={deleteTask}
-            onPinTask={() => {}}
-            onArchiveTask={() => {}}
-          ></TaskList>
-        </Col>
-      </Row>
+          <Col className="task-list-container" sm="3">
+            <TaskList
+              title="Done"
+              tasks={taskStore.done}
+              onDeleteTask={deleteTask}
+              onPinTask={() => {}}
+              onArchiveTask={() => {}}
+            ></TaskList>
+          </Col>
+        </Row>
+      </DragDropContext>
     </Container>
   );
 };
