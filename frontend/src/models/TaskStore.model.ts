@@ -57,6 +57,24 @@ const TaskStoreModel = types
         .map(task => sanitizeTask(task));
       self.done = cast(done);
     }
+  }))
+  .actions(self => ({
+    deleteWaitingTasks(id: string) {
+      const waiting = self.waiting.filter(task => task.id !== id);
+      self.waiting = cast(waiting);
+    },
+    deleteInProgressTasks(id: string) {
+      const inprogress = self.inprogress.filter(task => task.id !== id);
+      self.inprogress = cast(inprogress);
+    },
+    deleteInReviewTasks(id: string) {
+      const inreview = self.inreview.filter(task => task.id !== id);
+      self.inreview = cast(inreview);
+    },
+    deleteDoneTasks(id: string) {
+      const done = self.done.filter(task => task.id !== id);
+      self.done = cast(done);
+    }
   }));
 
 export default TaskStoreModel;

@@ -3,18 +3,22 @@ import TaskList from '../../components/TaskList/TaskList';
 import './Board.css';
 import { Row, Col, Container } from 'reactstrap';
 import useFetchTasks from '../../hooks/useFetchTasks';
-import useObserveTaskStore from '../../hooks/useObserveTaskStore';
+import { useTaskStore } from '../../hooks/useTaskStore';
+import { observer } from 'mobx-react-lite';
+import useDeleteTask from '../../hooks/useDeleteTask';
 
 const Board: React.FC = () => {
+  const taskStore = useTaskStore();
   useFetchTasks();
-  const { snapshot } = useObserveTaskStore();
+  const { deleteTask } = useDeleteTask();
   return (
     <Container fluid>
       <Row>
         <Col className="task-list-container" sm="3">
           <TaskList
             title="Waiting"
-            tasks={snapshot.waiting}
+            tasks={taskStore.waiting}
+            onDeleteTask={deleteTask}
             onPinTask={() => {}}
             onArchiveTask={() => {}}
           ></TaskList>
@@ -22,7 +26,8 @@ const Board: React.FC = () => {
         <Col className="task-list-container" sm="3">
           <TaskList
             title="In Progress"
-            tasks={snapshot.inprogress}
+            tasks={taskStore.inprogress}
+            onDeleteTask={deleteTask}
             onPinTask={() => {}}
             onArchiveTask={() => {}}
           ></TaskList>
@@ -31,7 +36,8 @@ const Board: React.FC = () => {
         <Col className="task-list-container" sm="3">
           <TaskList
             title="In Review"
-            tasks={snapshot.inreview}
+            tasks={taskStore.inreview}
+            onDeleteTask={deleteTask}
             onPinTask={() => {}}
             onArchiveTask={() => {}}
           ></TaskList>
@@ -40,7 +46,8 @@ const Board: React.FC = () => {
         <Col className="task-list-container" sm="3">
           <TaskList
             title="Done"
-            tasks={snapshot.done}
+            tasks={taskStore.done}
+            onDeleteTask={deleteTask}
             onPinTask={() => {}}
             onArchiveTask={() => {}}
           ></TaskList>
@@ -50,4 +57,4 @@ const Board: React.FC = () => {
   );
 };
 
-export default Board;
+export default observer(Board);

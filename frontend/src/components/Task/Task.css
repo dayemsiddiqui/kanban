@@ -14,3 +14,8 @@
 .task-label {
   text-align: left;
 }
+
+.task-icons > span {
+  float: right;
+  cursor: pointer;
+}

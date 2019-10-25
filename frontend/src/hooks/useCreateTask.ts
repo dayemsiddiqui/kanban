@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import apiInstance from '../libs/api-service';
 import { CreateTaskResponse } from '../interfaces/TaskResponse.interface';
-import { TaskStatus, Task } from '../interfaces/Task.interface';
+import { TaskStatus } from '../interfaces/Task.interface';
 import { sanitizeTask } from '../libs/sanitize-response';
 import { taskStore } from '../models/stores';
 

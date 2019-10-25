@@ -2,6 +2,7 @@ import React from 'react';
 import { Task as TaskItem } from '../../interfaces/Task.interface';
 import Task from '../Task/Task';
 import './TaskList.css';
+import { observer } from 'mobx-react-lite';
 
 interface TaskListProps {
   loading?: boolean;
@@ -9,6 +10,7 @@ interface TaskListProps {
   title: string;
   onPinTask: () => void;
   onArchiveTask: () => void;
+  onDeleteTask: (task: TaskItem) => void;
 }
 
 const TaskList: React.FC<TaskListProps> = ({
@@ -16,11 +18,13 @@ const TaskList: React.FC<TaskListProps> = ({
   tasks,
   title,
   onPinTask,
-  onArchiveTask
+  onArchiveTask,
+  onDeleteTask
 }) => {
   const events = {
     onPinTask,
-    onArchiveTask
+    onArchiveTask,
+    onDeleteTask
   };
 
   if (loading) {
@@ -59,4 +63,4 @@ const TaskList: React.FC<TaskListProps> = ({
   );
 };
 
-export default TaskList;
+export default observer(TaskList);

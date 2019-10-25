@@ -4,7 +4,6 @@ import { ModalBody, ModalFooter, Button } from 'reactstrap';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { TaskStatus } from '../../interfaces/Task.interface';
 import useCreateTask from '../../hooks/useCreateTask';
-import { useTaskStore } from '../../hooks/useTaskStore';
 
 interface CreateTaskProps {
   modal: boolean;
