@@ -11,6 +11,40 @@ const TaskStoreModel = types
     inreview: types.array(TaskModel),
     done: types.array(TaskModel)
   })
+  .views(self => ({
+    getWaitingTaskByIndex(index: number) {
+      return self.waiting[index];
+    },
+    getInProgressTaskByIndex(index: number) {
+      return self.inprogress[index];
+    },
+    getInReviewTaskByIndex(index: number) {
+      return self.inreview[index];
+    },
+    getDoneTaskByIndex(index: number) {
+      return self.done[index];
+    },
+    getTaskList(listType: TaskStatus) {
+      switch (listType) {
+        case TaskStatus.WAITING:
+          return self.waiting;
+        case TaskStatus.IN_REVIEW:
+          return self.inreview;
+        case TaskStatus.IN_PROGRESS:
+          return self.inprogress;
+        case TaskStatus.DONE:
+          return self.done;
+        default:
+          return self.waiting;
+      }
+    }
+  }))
+  .views(self => ({
+    getTaskByIndex(listType: TaskStatus, index: number) {
+      let taskList = self.getTaskList(listType);
+      return taskList[index];
+    }
+  }))
   .actions(self => ({
     addTask(task: Task) {
       switch (task.status) {
@@ -74,6 +108,33 @@ const TaskStoreModel = types
     deleteDoneTasks(id: string) {
       const done = self.done.filter(task => task.id !== id);
       self.done = cast(done);
+    }
+  }))
+  .actions(self => ({
+    deleteTaskByIndex(listType: TaskStatus, index: number) {
+      let taskList = self.getTaskList(listType);
+      taskList.splice(index, 1);
+    }
+  }))
+  .actions(self => ({
+    addTaskOnIndex(listType: TaskStatus, index: number, task: Task) {
+      let taskList = self.getTaskList(listType);
+      taskList.splice(index, 0, task);
+    }
+  }))
+  .actions(self => ({
+    moveTask(
+      fromListType: TaskStatus,
+      toListType: TaskStatus,
+      fromIndex: number,
+      toIndex: number
+    ) {
+      const task = {
+        ...self.getTaskByIndex(fromListType, fromIndex),
+        status: toListType
+      };
+      self.addTaskOnIndex(toListType, toIndex, task);
+      self.deleteTaskByIndex(fromListType, fromIndex);
     }
   }));
 

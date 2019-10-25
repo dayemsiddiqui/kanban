@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Task.css';
 import { Task as TaskItem } from '../../interfaces/Task.interface';
 import { Draggable } from 'react-beautiful-dnd';
+import { observer } from 'mobx-react-lite';
 
 interface TaskProps {
   task: TaskItem;
@@ -48,4 +49,4 @@ const Task: React.FC<TaskProps> = ({
   );
 };
 
-export default Task;
+export default observer(Task);

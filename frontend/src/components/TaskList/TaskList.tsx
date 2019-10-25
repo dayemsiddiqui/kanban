@@ -1,5 +1,5 @@
-import React from 'react';
-import { Task as TaskItem } from '../../interfaces/Task.interface';
+import React, { useState } from 'react';
+import { Task as TaskItem, TaskStatus } from '../../interfaces/Task.interface';
 import Task from '../Task/Task';
 import './TaskList.css';
 import { observer } from 'mobx-react-lite';
@@ -9,6 +9,7 @@ interface TaskListProps {
   loading?: boolean;
   tasks: TaskItem[];
   title: string;
+  columnType: TaskStatus;
   onPinTask: () => void;
   onArchiveTask: () => void;
   onDeleteTask: (task: TaskItem) => void;
@@ -17,6 +18,7 @@ interface TaskListProps {
 const TaskList: React.FC<TaskListProps> = ({
   loading,
   tasks,
+  columnType,
   title,
   onPinTask,
   onArchiveTask,
@@ -27,45 +29,32 @@ const TaskList: React.FC<TaskListProps> = ({
     onArchiveTask,
     onDeleteTask
   };
-
-  if (loading) {
-    return (
-      <div>
-        <strong>{title.toUpperCase()}</strong>
-        <ul className="uk-list task-list">
-          <p>Loading</p>
-        </ul>
-      </div>
-    );
-  }
-
-  if (tasks.length === 0) {
-    return (
-      <div>
-        <strong>{title.toUpperCase()}</strong>
-        <ul className="uk-list task-list">
-          <p>Empty</p>
-        </ul>
-      </div>
-    );
+  let showEmpty = true;
+  if (tasks && tasks.length === 0) {
+    showEmpty = true;
+  } else {
+    showEmpty = false;
   }
 
   return (
     <div>
       <strong>{title.toUpperCase()}</strong>
-      <Droppable droppableId={title}>
+      <Droppable droppableId={columnType}>
         {provided => (
           <ul
             ref={provided.innerRef}
             {...provided.droppableProps}
             className="uk-list task-list"
           >
-            {tasks.map((task, index) => (
-              <li key={task.id}>
-                <Task key={task.id} task={task} index={index} {...events} />
-              </li>
-            ))}
+            {!showEmpty &&
+              tasks.map((task, index) => (
+                <li key={task.id}>
+                  <Task key={task.id} task={task} index={index} {...events} />
+                </li>
+              ))}
             {provided.placeholder}
+            {loading && <p>Loading</p>}
+            {showEmpty && <p>Empty</p>}
           </ul>
         )}
       </Droppable>

@@ -6,19 +6,36 @@ import useFetchTasks from '../../hooks/useFetchTasks';
 import { useTaskStore } from '../../hooks/useTaskStore';
 import { observer } from 'mobx-react-lite';
 import useDeleteTask from '../../hooks/useDeleteTask';
-import { DragDropContext } from 'react-beautiful-dnd';
+import {
+  DragDropContext,
+  DropResult,
+  ResponderProvided
+} from 'react-beautiful-dnd';
+import { TaskStatus } from '../../interfaces/Task.interface';
 
 const Board: React.FC = () => {
   const taskStore = useTaskStore();
   useFetchTasks();
   const { deleteTask } = useDeleteTask();
+  const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
+    console.log('Result', result);
+    if (!result.destination) {
+      return;
+    }
+    const fromListType = result.source.droppableId as TaskStatus;
+    const fromIndex = result.source.index;
+    const toListType = result.destination.droppableId as TaskStatus;
+    const toIndex = result.destination.index;
+    taskStore.moveTask(fromListType, toListType, fromIndex, toIndex);
+  };
   return (
     <Container fluid>
-      <DragDropContext onDragEnd={() => {}}>
+      <DragDropContext onDragEnd={onDragEnd}>
         <Row>
           <Col className="task-list-container" sm="3">
             <TaskList
               title="Waiting"
+              columnType={TaskStatus.WAITING}
               tasks={taskStore.waiting}
               onDeleteTask={deleteTask}
               onPinTask={() => {}}
@@ -28,6 +45,7 @@ const Board: React.FC = () => {
           <Col className="task-list-container" sm="3">
             <TaskList
               title="In Progress"
+              columnType={TaskStatus.IN_PROGRESS}
               tasks={taskStore.inprogress}
               onDeleteTask={deleteTask}
               onPinTask={() => {}}
@@ -38,6 +56,7 @@ const Board: React.FC = () => {
           <Col className="task-list-container" sm="3">
             <TaskList
               title="In Review"
+              columnType={TaskStatus.IN_REVIEW}
               tasks={taskStore.inreview}
               onDeleteTask={deleteTask}
               onPinTask={() => {}}
@@ -48,6 +67,7 @@ const Board: React.FC = () => {
           <Col className="task-list-container" sm="3">
             <TaskList
               title="Done"
+              columnType={TaskStatus.DONE}
               tasks={taskStore.done}
               onDeleteTask={deleteTask}
               onPinTask={() => {}}
