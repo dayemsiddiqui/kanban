@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { environment } from '../config';
+import { firebaseAuth } from '../firebaseApp';
 
 function errorResponseHandler(error: any) {
   // check for errorHandle config
@@ -23,6 +24,20 @@ const apiInstance = axios.create({
 apiInstance.interceptors.response.use(
   response => response,
   errorResponseHandler
+);
+
+apiInstance.interceptors.request.use(
+  config => {
+    const idToken = window.localStorage.getItem('idToken');
+    console.log('IdTOken', idToken);
+    if (idToken) {
+      config.headers['Authorization'] = idToken;
+    }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
 );
 
 export default apiInstance;

@@ -13,12 +13,15 @@ export const firebaseApp = firebase.initializeApp(config);
 
 export const firebaseAuth = firebaseApp.auth();
 
-firebaseAuth.onAuthStateChanged(user => {
+firebaseAuth.onAuthStateChanged(async user => {
   if (user === null) {
     console.log('Removed item');
     window.localStorage.removeItem('user');
+    window.localStorage.removeItem('idToken');
   } else {
     console.log('Added item');
+    const token = await user.getIdToken();
+    window.localStorage.setItem('idToken', token);
     window.localStorage.setItem('user', JSON.stringify(user));
   }
 });
