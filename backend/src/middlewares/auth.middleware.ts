@@ -10,9 +10,9 @@ const isAuthorized = async (req: Request, res: Response, next: NextFunction): Pr
             const decodedToken = await firebaseAuth.verifyIdToken(idToken);
             console.log('Decoded Token', decodedToken);
             return next();
-        } catch {
+        } catch (error) {
             const err = new Error('Failed to authorize. Invalid Token');
-            console.log('Auth Middleware:', err.message, idToken);
+            console.log('Auth Middleware With Catch Error:', err.message, idToken, error);
             return res.status(401).json({ error: err.message });
         }
     } else {
