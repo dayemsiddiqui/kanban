@@ -6,8 +6,7 @@ const useUpdateTask = () => {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const updateTask = (updatedTask: Task) => {
     setSubmitting(true);
-    apiInstance.put(`tasks/${updatedTask.id}`, updatedTask).then(response => {
-      console.log('Response', response);
+    apiInstance.put(`tasks/${updatedTask.id}`, updatedTask).then(() => {
       setSubmitting(false);
     });
   };

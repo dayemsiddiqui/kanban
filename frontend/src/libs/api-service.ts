@@ -29,7 +29,6 @@ apiInstance.interceptors.response.use(
 apiInstance.interceptors.request.use(
   config => {
     const idToken = window.localStorage.getItem('idToken');
-    console.log('IdTOken', idToken);
     if (idToken) {
       config.headers['Authorization'] = idToken;
     }
