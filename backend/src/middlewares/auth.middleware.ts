@@ -12,11 +12,13 @@ const isAuthorized = async (req: Request, res: Response, next: NextFunction): Pr
             return next();
         } catch {
             const err = new Error('Failed to authorize. Invalid Token');
-            return res.status(401).json({ error: err });
+            console.log('Auth Middleware:', err.message);
+            return res.status(401).json({ error: err.message });
         }
     } else {
         const err = new Error('Not authorized! Go back!');
-        return res.status(401).json({ error: err });
+        console.log('Auth Middleware:', err.message);
+        return res.status(401).json({ error: err.message });
     }
 };
 
