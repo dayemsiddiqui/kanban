@@ -1,6 +1,8 @@
 import { Request, NextFunction, Response } from 'express';
 import * as admin from 'firebase-admin';
-const app = admin.initializeApp();
+const app = admin.initializeApp({
+    projectId: 'elated-bebop-154812',
+});
 const firebaseAuth = app.auth();
 const isAuthorized = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
     console.log('Authorization Header', req.headers.authorization);
