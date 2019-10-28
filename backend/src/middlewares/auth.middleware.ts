@@ -5,6 +5,7 @@ const firebaseAuth = app.auth();
 const isAuthorized = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
     if (req.headers.authorization) {
         const idToken = req.headers.authorization;
+        console.log('IDToken', idToken);
         try {
             const decodedToken = await firebaseAuth.verifyIdToken(idToken);
             console.log('Decoded Token', decodedToken);
