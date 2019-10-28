@@ -3,9 +3,9 @@ import * as admin from 'firebase-admin';
 const app = admin.initializeApp();
 const firebaseAuth = app.auth();
 const isAuthorized = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+    console.log('Authorization Header', req.headers.authorization);
     if (req.headers.authorization) {
         const idToken = req.headers.authorization;
-        console.log('IDToken', idToken);
         try {
             const decodedToken = await firebaseAuth.verifyIdToken(idToken);
             console.log('Decoded Token', decodedToken);
