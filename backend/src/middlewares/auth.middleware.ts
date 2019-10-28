@@ -5,7 +5,7 @@ const app = admin.initializeApp({
 });
 const firebaseAuth = app.auth();
 const isAuthorized = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
-    console.log('Authorization Header', req.headers.authorization);
+    console.log('Authorization Header App ProjectID', req.headers.authorization);
     if (req.headers.authorization) {
         const idToken = 'Bearer ' + req.headers.authorization;
         try {
