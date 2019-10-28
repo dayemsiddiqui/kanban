@@ -1,25 +1,52 @@
 import React from 'react';
 import './NavBar.css';
+import {
+  Navbar,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  NavLink
+} from 'reactstrap';
+import { FirebaseAuth } from 'react-firebaseui';
 
 interface NavBarProps {
   onAddTaskClick: () => void;
+  onLogoutClick: () => void;
+  user: firebase.User | null;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ onAddTaskClick }) => {
+const NavBar: React.FC<NavBarProps> = ({
+  onAddTaskClick,
+  onLogoutClick,
+  user
+}) => {
+  let greeting = 'Hi There';
+  if (user) {
+    greeting = 'Welcome, ' + user.displayName;
+  }
   return (
-    <nav className="uk-navbar-container navbar">
-      <div className="uk-navbar-left">
-        <span className="uk-navbar-item uk-logo navbar-logo">
-          Dead Simple Kanban
-        </span>
-
-        <ul className="uk-navbar-nav color-white">
-          <li>
-            <span onClick={onAddTaskClick}>Add Task</span>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <Navbar color="dark" light expand="md">
+      <NavbarBrand className="navbar-logo">Dead Simple Kanban</NavbarBrand>
+      <Nav className="ml-auto navbar-logo" navbar>
+        <NavItem onClick={onAddTaskClick}>
+          <NavItem>
+            <NavLink>Add Task</NavLink>
+          </NavItem>
+        </NavItem>
+        <UncontrolledDropdown nav inNavbar>
+          <DropdownToggle nav caret>
+            {greeting}
+          </DropdownToggle>
+          <DropdownMenu right>
+            <DropdownItem onClick={onLogoutClick}>Logout</DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      </Nav>
+    </Navbar>
   );
 };
 

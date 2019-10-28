@@ -1,9 +1,17 @@
 .navbar {
-  background: #2f3640 !important;
+  background: #00bfd8 !important;
 }
 
 .navbar-logo {
   color: white !important;
+  margin: 0;
+}
+
+.navbar-logo > li {
+  padding-right: 10px;
+  margin: 0;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .color-white > li > span {
