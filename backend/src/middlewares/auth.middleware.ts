@@ -5,14 +5,14 @@ const firebaseAuth = app.auth();
 const isAuthorized = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
     console.log('Authorization Header', req.headers.authorization);
     if (req.headers.authorization) {
-        const idToken = req.headers.authorization;
+        const idToken = 'Bearer ' + req.headers.authorization;
         try {
             const decodedToken = await firebaseAuth.verifyIdToken(idToken);
             console.log('Decoded Token', decodedToken);
             return next();
         } catch {
             const err = new Error('Failed to authorize. Invalid Token');
-            console.log('Auth Middleware:', err.message);
+            console.log('Auth Middleware:', err.message, idToken);
             return res.status(401).json({ error: err.message });
         }
     } else {
