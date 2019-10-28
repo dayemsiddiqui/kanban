@@ -1,21 +1,23 @@
-import { useState, useEffect } from 'react';
 import { firebaseAuth } from '../firebaseApp';
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 const useFirebaseAuth = () => {
-  const [user, setUser] = useState<firebase.User | null>(null);
   const history = useHistory();
+  let user = null;
+  const userFromLocalStorage = window.localStorage.getItem('user');
+  const loggedIn = !!userFromLocalStorage;
+  if (userFromLocalStorage) {
+    user = JSON.parse(userFromLocalStorage);
+  }
   const signOut = () => {
     firebaseAuth.signOut();
+    window.localStorage.removeItem('user');
     history.push('/');
   };
-  useEffect(() => {
-    firebaseAuth.onAuthStateChanged(user => {
-      setUser(user);
-    });
-  }, []);
+
   return {
     user,
+    loggedIn,
     signOut
   };
 };

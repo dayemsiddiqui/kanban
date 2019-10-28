@@ -33,9 +33,7 @@ const NavBar: React.FC<NavBarProps> = ({
       <NavbarBrand className="navbar-logo">Dead Simple Kanban</NavbarBrand>
       <Nav className="ml-auto navbar-logo" navbar>
         <NavItem onClick={onAddTaskClick}>
-          <NavItem>
-            <NavLink>Add Task</NavLink>
-          </NavItem>
+          <NavLink>Add Task</NavLink>
         </NavItem>
         <UncontrolledDropdown nav inNavbar>
           <DropdownToggle nav caret>

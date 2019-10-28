@@ -12,3 +12,13 @@ const config = {
 export const firebaseApp = firebase.initializeApp(config);
 
 export const firebaseAuth = firebaseApp.auth();
+
+firebaseAuth.onAuthStateChanged(user => {
+  if (user === null) {
+    console.log('Removed item');
+    window.localStorage.removeItem('user');
+  } else {
+    console.log('Added item');
+    window.localStorage.setItem('user', JSON.stringify(user));
+  }
+});

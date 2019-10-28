@@ -54,7 +54,11 @@ const TaskList: React.FC<TaskListProps> = ({
               ))}
             {provided.placeholder}
             {loading && <p>Loading</p>}
-            {showEmpty && <p>Empty</p>}
+            {showEmpty && (
+              <div>
+                <img src="/images/empty-list.png" />
+              </div>
+            )}
           </ul>
         )}
       </Droppable>
