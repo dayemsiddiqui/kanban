@@ -13,7 +13,9 @@ const TaskModel = types
       TaskStatus.WAITING
     ]),
     pinned: types.boolean,
-    archieved: types.boolean
+    archieved: types.boolean,
+    uid: types.string,
+    email: types.string
   })
   .actions(self => ({
     changeStatus(status: TaskStatus) {

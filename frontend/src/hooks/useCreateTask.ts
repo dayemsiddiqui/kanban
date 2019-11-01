@@ -9,6 +9,8 @@ type createTaskPostData = {
   label: string;
   description: string;
   status: TaskStatus;
+  email: string;
+  uid: string;
 };
 
 const useCreateTask = () => {

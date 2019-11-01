@@ -1,4 +1,4 @@
-import { Task, TaskStatus } from '../interfaces/Task.interface';
+import { TaskStatus } from '../interfaces/Task.interface';
 import { useState } from 'react';
 import apiInstance from '../libs/api-service';
 import { taskStore } from '../models/stores';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Task as TaskItem, TaskStatus } from '../../interfaces/Task.interface';
 import Task from '../Task/Task';
 import './TaskList.css';
@@ -56,7 +56,7 @@ const TaskList: React.FC<TaskListProps> = ({
             {loading && <p>Loading</p>}
             {showEmpty && (
               <div>
-                <img src="/images/empty-list.png" />
+                <img src="/images/empty-list.png" alt="No Items Found" />
               </div>
             )}
           </ul>

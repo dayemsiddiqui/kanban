@@ -9,7 +9,6 @@ import * as serviceWorker from './serviceWorker';
 import { CustomWindow } from './interfaces/CustomWindow.interface';
 import { BrowserRouter } from 'react-router-dom';
 const { registerObserver } = require('react-perf-devtool');
-
 declare let window: CustomWindow;
 // assign the observer to the global scope, as the GC will delete it otherwise
 window.observer = registerObserver({});

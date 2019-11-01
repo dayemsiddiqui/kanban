@@ -11,7 +11,6 @@ import {
   DropdownItem,
   NavLink
 } from 'reactstrap';
-import { FirebaseAuth } from 'react-firebaseui';
 
 interface NavBarProps {
   onAddTaskClick: () => void;

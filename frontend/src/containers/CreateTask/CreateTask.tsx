@@ -4,6 +4,7 @@ import { ModalBody, ModalFooter, Button } from 'reactstrap';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { TaskStatus } from '../../interfaces/Task.interface';
 import useCreateTask from '../../hooks/useCreateTask';
+import { UserService } from '../../libs/user-service';
 
 interface CreateTaskProps {
   modal: boolean;
@@ -24,7 +25,16 @@ const CreateTask: React.FC<CreateTaskProps> = ({ modal, closeModal }) => {
           validate={values => ({})}
           onSubmit={(values, { setSubmitting }) => {
             setSubmitting(submitting);
-            createTask(values);
+            const user = new UserService();
+            if (user.isValid()) {
+              createTask({
+                ...values,
+                email: user.getEmail(),
+                uid: user.getUID()
+              });
+            } else {
+              console.log('Failed to create a task. User not found');
+            }
           }}
         >
           {({ isSubmitting }) => (

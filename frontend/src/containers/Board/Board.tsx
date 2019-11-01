@@ -7,7 +7,7 @@ import { useTaskStore } from '../../hooks/useTaskStore';
 import { observer } from 'mobx-react-lite';
 import useDeleteTask from '../../hooks/useDeleteTask';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { TaskStatus } from '../../interfaces/Task.interface';
+import { TaskStatus, Task } from '../../interfaces/Task.interface';
 import useMoveTask from '../../hooks/useMoveTask';
 
 const Board: React.FC = () => {
@@ -25,6 +25,10 @@ const Board: React.FC = () => {
     const toIndex = result.destination.index;
     moveTask(fromListType, toListType, fromIndex, toIndex);
   };
+
+  const onTaskDelete = (task: Task) => {
+    deleteTask(task);
+  };
   return (
     <Container fluid>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -34,7 +38,7 @@ const Board: React.FC = () => {
               title="Waiting"
               columnType={TaskStatus.WAITING}
               tasks={taskStore.waiting}
-              onDeleteTask={deleteTask}
+              onDeleteTask={onTaskDelete}
               onPinTask={() => {}}
               onArchiveTask={() => {}}
             ></TaskList>
@@ -44,7 +48,7 @@ const Board: React.FC = () => {
               title="In Progress"
               columnType={TaskStatus.IN_PROGRESS}
               tasks={taskStore.inprogress}
-              onDeleteTask={deleteTask}
+              onDeleteTask={onTaskDelete}
               onPinTask={() => {}}
               onArchiveTask={() => {}}
             ></TaskList>
@@ -55,7 +59,7 @@ const Board: React.FC = () => {
               title="In Review"
               columnType={TaskStatus.IN_REVIEW}
               tasks={taskStore.inreview}
-              onDeleteTask={deleteTask}
+              onDeleteTask={onTaskDelete}
               onPinTask={() => {}}
               onArchiveTask={() => {}}
             ></TaskList>
@@ -66,7 +70,7 @@ const Board: React.FC = () => {
               title="Done"
               columnType={TaskStatus.DONE}
               tasks={taskStore.done}
-              onDeleteTask={deleteTask}
+              onDeleteTask={onTaskDelete}
               onPinTask={() => {}}
               onArchiveTask={() => {}}
             ></TaskList>

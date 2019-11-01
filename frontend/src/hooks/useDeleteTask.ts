@@ -12,6 +12,7 @@ const deleteTaskCommand = {
 
 const useDeleteTask = () => {
   const [submitting, setSubmitting] = useState<boolean>(false);
+
   const deleteTask = (task: Task) => {
     setSubmitting(true);
     apiInstance.delete(`tasks/${task.id}`).then(() => {

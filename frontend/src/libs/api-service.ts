@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { environment } from '../config';
-import { firebaseAuth } from '../firebaseApp';
 
 function errorResponseHandler(error: any) {
   // check for errorHandle config
