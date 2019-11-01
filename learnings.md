@@ -29,3 +29,6 @@
 - Firebase Authentication
 - Mobx-State-Tree
 - Practiced React Hooks
+- TODO:
+  - Cloud MemoryStore
+  - Implement a read-through and write-through cache for db calls
