@@ -5,6 +5,8 @@ export interface Task {
     status: TaskStatus;
     archieved: boolean;
     pinned: boolean;
+    uid: string;
+    email: string;
 }
 
 export enum TaskStatus {
