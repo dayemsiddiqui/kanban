@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree';
+import { types, Instance } from 'mobx-state-tree';
 import { TaskStatus, Task } from '../interfaces/Task.interface';
 import TaskModel from './Task.model';
 import { cast } from 'mobx-state-tree';
@@ -138,4 +138,5 @@ const TaskStoreModel = types
     }
   }));
 
+export type TaskStoreModel = Instance<typeof TaskStoreModel>;
 export default TaskStoreModel;

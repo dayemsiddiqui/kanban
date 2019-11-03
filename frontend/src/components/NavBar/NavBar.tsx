@@ -11,21 +11,22 @@ import {
   DropdownItem,
   NavLink
 } from 'reactstrap';
+import { observer } from 'mobx-react-lite';
 
 interface NavBarProps {
   onAddTaskClick: () => void;
   onLogoutClick: () => void;
-  user: firebase.User | null;
+  displayName: string;
 }
 
 const NavBar: React.FC<NavBarProps> = ({
   onAddTaskClick,
   onLogoutClick,
-  user
+  displayName
 }) => {
   let greeting = 'Hi There';
-  if (user) {
-    greeting = 'Welcome, ' + user.displayName;
+  if (displayName !== '') {
+    greeting = 'Welcome, ' + displayName;
   }
   return (
     <Navbar color="dark" light expand="md">
@@ -47,4 +48,4 @@ const NavBar: React.FC<NavBarProps> = ({
   );
 };
 
-export default NavBar;
+export default observer(NavBar);

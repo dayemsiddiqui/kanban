@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { TaskStoreModel } from '../interfaces/TaskStoreModel.interface';
+import { TaskStoreModel } from '../models/TaskStore.model';
 
 const TaskStoreContext = createContext<TaskStoreModel>({} as TaskStoreModel);
 

@@ -1,4 +1,6 @@
 import firebase from 'firebase';
+import { userStore } from './models/stores';
+import history from './libs/history-service';
 
 // Configure Firebase.
 const config = {
@@ -15,11 +17,18 @@ export const firebaseAuth = firebaseApp.auth();
 
 firebaseAuth.onAuthStateChanged(async user => {
   if (user === null) {
+    userStore.setUnAuthenticated();
     window.localStorage.removeItem('user');
     window.localStorage.removeItem('idToken');
+    history.push('/');
   } else {
+    window.localStorage.setItem('user', JSON.stringify(user));
+    userStore.setAuthenticated();
+    userStore.setEmail(user.email || '');
+    userStore.setUID(user.uid);
+    userStore.setDisplayName(user.displayName || user.email || '');
+    history.push('/dashboard');
     const token = await user.getIdToken(true);
     window.localStorage.setItem('idToken', token);
-    window.localStorage.setItem('user', JSON.stringify(user));
   }
 });

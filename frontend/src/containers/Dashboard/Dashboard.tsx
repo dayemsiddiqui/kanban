@@ -12,7 +12,11 @@ const Dashboard: React.FC = () => {
   const { user, signOut } = useFirebaseAuth();
   return (
     <>
-      <NavBar onAddTaskClick={openModal} onLogoutClick={signOut} user={user} />
+      <NavBar
+        onAddTaskClick={openModal}
+        onLogoutClick={signOut}
+        displayName={user.displayName}
+      />
       <TaskStoreProvider value={taskStore}>
         <Board />
         <CreateTask modal={modal} closeModal={closeModal} />

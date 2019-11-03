@@ -7,7 +7,8 @@ import '../node_modules/uikit/dist/js/uikit';
 import '../node_modules/uikit/dist/js/uikit-icons';
 import * as serviceWorker from './serviceWorker';
 import { CustomWindow } from './interfaces/CustomWindow.interface';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import history from './libs/history-service';
 const { registerObserver } = require('react-perf-devtool');
 declare let window: CustomWindow;
 // assign the observer to the global scope, as the GC will delete it otherwise
@@ -17,9 +18,9 @@ const Icons = require('uikit/dist/js/uikit-icons');
 UIkit.use(Icons);
 
 ReactDOM.render(
-  <BrowserRouter>
+  <Router history={history}>
     <App />
-  </BrowserRouter>,
+  </Router>,
   document.getElementById('root')
 );
 
