@@ -1,23 +1,18 @@
 import { Task } from '../interfaces/Task.interface';
 import { taskCollection, firestoreClient } from '../lib/firestore.lib';
+import { auth } from 'firebase-admin';
 
-export async function getAllTasks(): Promise<Task[]> {
+export async function getAllTasks(userIdToken: auth.DecodedIdToken): Promise<Task[]> {
     const dataItems: Task[] = [];
     try {
-        const documentRefs = await taskCollection.listDocuments();
-        if (documentRefs.length === 0) {
-            console.info('No Documents Found');
-            return [];
-        }
-        const documentSnapshots = await firestoreClient.getAll(...documentRefs);
-        for (const documentSnapshot of documentSnapshots) {
+        const querySnapshot = await taskCollection.where('uid', '==', userIdToken.uid).get();
+        querySnapshot.forEach(documentSnapshot => {
             if (documentSnapshot.exists) {
-                console.log(`Found document with data: ${documentSnapshot.id}`);
                 dataItems.push({ id: documentSnapshot.id, ...documentSnapshot.data() } as Task);
             } else {
                 console.log(`Found missing document: ${documentSnapshot.id}`);
             }
-        }
+        });
         return dataItems;
     } catch (err) {
         console.error('Failed to fetch tasks', err);
@@ -25,12 +20,19 @@ export async function getAllTasks(): Promise<Task[]> {
     }
 }
 
-export async function getTaskByStatus(statusValue: string): Promise<Task[]> {
+export async function getTaskByStatus(statusValue: string, userIdToken: auth.DecodedIdToken): Promise<Task[]> {
     const dataItems: Task[] = [];
-    const querySnapshot = await taskCollection.where('status', '==', statusValue).get();
-    querySnapshot.forEach(documentSnapshot =>
-        dataItems.push({ id: documentSnapshot.id, ...documentSnapshot.data() } as Task),
-    );
+    const querySnapshot = await taskCollection
+        .where('uid', '==', userIdToken.uid)
+        .where('status', '==', statusValue)
+        .get();
+    querySnapshot.forEach(documentSnapshot => {
+        if (documentSnapshot.exists) {
+            dataItems.push({ id: documentSnapshot.id, ...documentSnapshot.data() } as Task);
+        } else {
+            console.log(`Found missing document: ${documentSnapshot.id}`);
+        }
+    });
     return dataItems;
 }
 
