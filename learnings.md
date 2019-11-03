@@ -21,6 +21,9 @@
 - Custom claims in firebase auth
 - Hosting multiple sites on single firebase project
 - Google Cloud SQL
+- Figure out a better way to integrate mobx-state-tree, firebaseAuth and react-router
+- Google Cloud Pub/Sub
+- Publish your own react UI component library on npm
 
 ## Things that I learned in this project
 
@@ -32,3 +35,5 @@
 - TODO:
   - Cloud MemoryStore
   - Implement a read-through and write-through cache for db calls
+  - Add view details dialog box
+  - Restrict firebase auth api from API console
